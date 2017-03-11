@@ -20,13 +20,12 @@
 
     void Process::resetTimeStamps()
     {
-        ATOMIC_START
+        ATOMIC()
         {
         this->_scheduledTS = _scheduler.getCurrTS();
         this->_actualTS = _scheduler.getCurrTS();
         this->_pBehind = 0;
         }
-        ATOMIC_END
     }
 
     bool Process::disable()
@@ -66,21 +65,19 @@
 
     void Process::setIterations(int iterations)
     {
-        ATOMIC_START
+        ATOMIC()
         {
             _iterations = iterations;
         }
-        ATOMIC_END
     }
 
 
     void Process::setPeriod(uint32_t period)
     {
-        ATOMIC_START
+        ATOMIC()
         {
             _period = period;
         }
-        ATOMIC_END
     }
 
 
@@ -154,11 +151,10 @@
     void Process::setTimeout(uint32_t timeout)
     {
         // Can not let interrupt happen
-        ATOMIC_START
+        ATOMIC()
         {
             _timeout = timeout;
         }
-        ATOMIC_END
     }
 
 
