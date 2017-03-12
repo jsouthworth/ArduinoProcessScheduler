@@ -73,8 +73,16 @@ typedef enum ProcessWarning
     #define ENABLE_SCHEDULER_ISR()
     #define DISABLE_SCHEDULER_ISR()
 
+#elif defined(ARDUINO_ARCH_SAMD)
+    #define HALT_PROCESSOR() \
+            do { SCB->SCR |= SCB_SCR_SLEEPDEEP_Msk; __WFI(); } while(0)
+
+    // Not supported on SAMD
+    #define ENABLE_SCHEDULER_ISR()
+    #define DISABLE_SCHEDULER_ISR()
+
 #else
-    #error “This library only supports AVR and ESP8266 Boards.”
+    #error “This library only supports AVR, ESP8266, and SAMD Boards.”
 #endif
 
 
